@@ -14,6 +14,8 @@ import org.mockito.MockitoAnnotations;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -39,7 +41,8 @@ public class ShipwreckControllerTest{
 
         Shipwreck wreck = sc.get(1L);
         verify(shipwreckRepository).getOne(1L);       // Verify that getOne is called inside the controller in shipwreckRepository object
-        assertEquals(1L,wreck.getId().longValue());
+        //assertEquals(1L,wreck.getId().longValue());
+        assertThat(wreck.getId(),is(1L));
     }
 
     @Test
@@ -49,7 +52,8 @@ public class ShipwreckControllerTest{
         mockList.add(new Shipwreck());
         when(shipwreckRepository.findAll()).thenReturn(mockList);
         List<Shipwreck> list = sc.list();
-        assertEquals(mockList,list);
+        //assertEquals(mockList,list);
+        assertThat(mockList,is(list));
     }
 
     @Test
@@ -64,7 +68,8 @@ public class ShipwreckControllerTest{
         when(shipwreckRepository.saveAndFlush(currentSw)).thenReturn(updatedSw);
 
         Shipwreck resultSw = sc.update(1L,updatedSw);
-        assertEquals(updatedSw.getDescription(),resultSw.getDescription());
+        //assertEquals(updatedSw.getDescription(),resultSw.getDescription());
+        assertThat(updatedSw.getDescription(),is(resultSw.getDescription()));
     }
 
 }
